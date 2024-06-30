@@ -51,7 +51,6 @@ const RenderBars = (props: RenderBarsPropsType) => {
     pointerConfig,
     noOfSectionsBelowXAxis,
     yAxisOffset,
-    barWidth,
   } = props;
 
   const barHeight = Math.max(
@@ -89,7 +88,8 @@ const RenderBars = (props: RenderBarsPropsType) => {
               (item.labelWidth ||
                 props.labelWidth ||
                 item.barWidth ||
-                barWidth) + spacing,
+                props.barWidth ||
+                30) + spacing,
             left: spacing / -2,
             position: 'absolute',
             height: props.xAxisLabelsHeight ?? xAxisTextNumberOfLines * 18,
@@ -150,19 +150,21 @@ const RenderBars = (props: RenderBarsPropsType) => {
       <Animated.View
         style={[
           {
+            justifyContent:'center',
+            borderWidth:0,
             width:
               (item.labelWidth ||
                 props.labelWidth ||
                 item.barWidth ||
-                barWidth) + spacing,
+                props.barWidth ||
+                30) + spacing,
             left: spacing / -2,
             position: 'absolute',
             height: props.xAxisLabelsHeight ?? xAxisTextNumberOfLines * 18,
             bottom:
               (rotateLabel
                 ? -40
-                : -6 - xAxisTextNumberOfLines * 18 - xAxisLabelsVerticalShift) -
-              barMarginBottom,
+                : 18), //-6 - xAxisTextNumberOfLines * 18 - xAxisLabelsVerticalShift) - barMarginBottom,   // CHRIS CHANGED 
             opacity: appearingOpacity,
           },
           value < 0 && {transform: [{rotate: '180deg'}]},
@@ -190,11 +192,11 @@ const RenderBars = (props: RenderBarsPropsType) => {
         ) : (
           <Text
             style={[
-              {textAlign: 'center'},
+              {textAlign: 'left', width:250, flexWrap:'wrap'},
               rtl && horizontal && {transform: [{rotate: '180deg'}]},
-              labelTextStyle,
+              // labelTextStyle,
             ]}
-            numberOfLines={xAxisTextNumberOfLines}>
+            numberOfLines={2}>
             {label || ''}
           </Text>
         )}
@@ -205,7 +207,8 @@ const RenderBars = (props: RenderBarsPropsType) => {
   let leftSpacing = initialSpacing;
   for (let i = 0; i < index; i++) {
     leftSpacing +=
-      (data[i].spacing ?? propSpacing) + (data[i].barWidth || barWidth);
+      (data[i].spacing ?? propSpacing) +
+      (data[i].barWidth || props.barWidth || 30);
   }
 
   const static2DWithGradient = (item: barDataItem) => {
@@ -247,9 +250,9 @@ const RenderBars = (props: RenderBarsPropsType) => {
             style={[
               {
                 position: 'absolute',
-                top: (item.barWidth || barWidth) * -1,
-                height: item.barWidth || barWidth,
-                width: item.barWidth || barWidth,
+                top: (item.barWidth || props.barWidth || 30) * -1,
+                height: item.barWidth || props.barWidth || 30,
+                width: item.barWidth || props.barWidth || 30,
                 justifyContent:
                   (horizontal && !intactTopLabel) || item.value < 0
                     ? 'center'
@@ -280,35 +283,31 @@ const RenderBars = (props: RenderBarsPropsType) => {
   const barWrapperStyle = [
     {
       // overflow: 'visible',
-      marginBottom: 60 + barMarginBottom + xAxisLabelsVerticalShift - 0.5,
+      marginBottom: 20 + barMarginBottom + xAxisLabelsVerticalShift - 0.5, // // CHRIS CHANGED FROM 60 +...
       width: commonPropsFor2Dand3Dbars.barWidth,
       height: barHeight,
       marginRight: spacing,
+      borderWidth:0,
     },
-
-    pointerConfig
+    item.value < 0
       ? {
           transform: [
             {
               translateY:
-                (containerHeight || 200) -
-                (barHeight - 10 + xAxisLabelsVerticalShift) +
-                (item.value < 0
-                  ? (Math.abs(item.value) * (containerHeight || 200)) /
-                    (maxValue || 200)
-                  : 0),
+                (Math.abs(item.value) * (containerHeight || 200)) /
+                (maxValue || 200),
             },
+            {rotateZ: '180deg'},
           ],
         }
-      : item.value < 0
+      : pointerConfig
         ? {
             transform: [
               {
                 translateY:
-                  (Math.abs(item.value) * (containerHeight || 200)) /
-                  (maxValue || 200),
+                  (containerHeight || 200) -
+                  (barHeight - 10 + xAxisLabelsVerticalShift),
               },
-              {rotateZ: '180deg'},
             ],
           }
         : null,
@@ -351,12 +350,16 @@ const RenderBars = (props: RenderBarsPropsType) => {
         {(props.showXAxisIndices || item.showXAxisIndex) && (
           <View
             style={{
+              
               zIndex: 2,
               position: 'absolute',
               height: props.xAxisIndicesHeight,
               width: props.xAxisIndicesWidth,
               bottom: props.xAxisIndicesHeight / -2,
-              left: ((item.barWidth || barWidth) - props.xAxisIndicesWidth) / 2,
+              left:
+                ((item.barWidth || props.barWidth || 30) -
+                  props.xAxisIndicesWidth) /
+                2,
               backgroundColor: props.xAxisIndicesColor,
             }}
           />
@@ -367,8 +370,9 @@ const RenderBars = (props: RenderBarsPropsType) => {
             sideWidth={
               item.sideWidth ||
               props.sideWidth ||
-              (item.barWidth || barWidth) / 2
+              (item.barWidth || props.barWidth || 30) / 2
             }
+            
             side={side || 'left'}
             sideColor={item.sideColor || props.sideColor || ''}
             topColor={item.topColor || props.topColor || ''}
@@ -398,7 +402,7 @@ const RenderBars = (props: RenderBarsPropsType) => {
   return (
     <>
       {pressDisabled ? (
-        <View pointerEvents="none" style={barWrapperStyle}>
+        <View pointerEvents="none" style={[barWrapperStyle,{borderWidth:0,}]}>
           {barContent()}
         </View>
       ) : (
@@ -428,7 +432,7 @@ const RenderBars = (props: RenderBarsPropsType) => {
                 ? props.onPressOut(item, index)
                 : null;
           }}
-          style={barWrapperStyle}>
+          style={[barWrapperStyle,{borderWidth:0,}]}>
           {barContent()}
         </TouchableOpacity>
       )}

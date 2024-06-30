@@ -344,8 +344,10 @@ export const renderHorizSections = (props: horizSectionPropTypes) => {
         <View
           pointerEvents="none"
           style={{
+            top: 40,  // CHRIS CHANGED ADDED
             flexDirection: 'row',
             marginTop: stepHeight / -2,
+            
           }}>
           <View style={{width: (width ?? totalWidth) + endSpacing}}>
             {yAxisExtraHeightAtTop ? renderExtraHeightOfYAxisAtTop() : null}

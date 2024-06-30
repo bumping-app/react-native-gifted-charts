@@ -86,7 +86,8 @@ export const BarChart = (props: BarChartPropsType) => {
     autoShiftLabels,
     getPropsCommonForBarAndStack,
     barAndLineChartsWrapperProps,
-  } = useBarChart({...props, heightValue, widthValue, opacValue, parentWidth: props.parentWidth ?? screenWidth});
+  //} = useBarChart({...props, heightValue, widthValue, opacValue, parentWidth: props.parentWidth ?? screenWidth});
+  } = useBarChart({...props, heightValue, widthValue, opacValue});
 
   const labelsAppear = useCallback(() => {
     opacValue.setValue(0);
@@ -262,6 +263,7 @@ export const BarChart = (props: BarChartPropsType) => {
           }}
           onResponderTerminationRequest={evt => false}
           style={{
+            
             position: 'absolute',
             height: containerHeightIncludingBelowXAxis,
             bottom: 60,
@@ -318,6 +320,7 @@ export const BarChart = (props: BarChartPropsType) => {
     if (props.stackData) {
       return props.stackData.map((item, index) => {
         return (
+          
           <RenderStackBars
             stackData={props.stackData || []}
             isAnimated={isAnimated}
@@ -329,10 +332,13 @@ export const BarChart = (props: BarChartPropsType) => {
             stackBorderBottomRightRadius={props.stackBorderBottomRightRadius}
             {...getPropsCommonForBarAndStack(item, index)}
           />
+          
         );
       });
     } else {
-      return data.map((item, index) => (
+      return (
+        <View style={{flex:1, borderWidth:0, flexDirection:'row', alignItems:'flex-end'}}>
+        {data.map((item, index) => (
         <RenderBars
           data={data}
           side={side}
@@ -358,7 +364,9 @@ export const BarChart = (props: BarChartPropsType) => {
           barStyle={props.barStyle}
           {...getPropsCommonForBarAndStack(item, index)}
         />
-      ));
+      ))}
+      </View>
+      )
     }
   };
 
