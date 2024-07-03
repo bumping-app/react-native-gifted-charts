@@ -21,6 +21,7 @@ const RenderBars = (props: RenderBarsPropsType) => {
     minHeight,
     spacing,
     propSpacing,
+    chrisSpacing,
     side,
     data,
     barBorderWidth,
@@ -286,7 +287,7 @@ const RenderBars = (props: RenderBarsPropsType) => {
       marginBottom: 20 + barMarginBottom + xAxisLabelsVerticalShift - 0.5, // // CHRIS CHANGED FROM 60 +...
       width: commonPropsFor2Dand3Dbars.barWidth,
       height: barHeight,
-      marginRight: spacing,
+      marginRight: spacing + (chrisSpacing ? chrisSpacing : 0), // CHRIS CHANGE
       borderWidth:0,
     },
     item.value < 0

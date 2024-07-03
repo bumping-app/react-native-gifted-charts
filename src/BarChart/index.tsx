@@ -353,6 +353,7 @@ export const BarChart = (props: BarChartPropsType) => {
           roundedTop={props.roundedTop}
           roundedBottom={props.roundedBottom}
           frontColor={props.frontColor}
+          chrisSpacing={item.chrisSpacing}
           sideColor={props.sideColor}
           topColor={props.topColor}
           cappedBars={props.cappedBars}
