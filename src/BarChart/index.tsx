@@ -354,6 +354,8 @@ export const BarChart = (props: BarChartPropsType) => {
           roundedBottom={props.roundedBottom}
           frontColor={props.frontColor}
           chrisSpacing={item.chrisSpacing}
+          subLabel={item.subLabel}
+          attribs={item.attribs}
           sideColor={props.sideColor}
           topColor={props.topColor}
           cappedBars={props.cappedBars}

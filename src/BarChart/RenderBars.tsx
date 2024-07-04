@@ -33,6 +33,8 @@ const RenderBars = (props: RenderBarsPropsType) => {
     animationDuration,
     autoShiftLabels,
     label,
+    subLabel,
+    attribs,
     labelTextStyle,
     xAxisTextNumberOfLines,
     xAxisLabelsVerticalShift,
@@ -144,6 +146,8 @@ const RenderBars = (props: RenderBarsPropsType) => {
 
   const renderAnimatedLabel = (
     label: String,
+    subLabel: String,
+    attribs: String,
     labelTextStyle: any,
     value: number,
   ) => {
@@ -198,7 +202,7 @@ const RenderBars = (props: RenderBarsPropsType) => {
               // labelTextStyle,
             ]}
             numberOfLines={2}>
-            {label || ''}
+            {label + (subLabel ? '-' + subLabel : '') + (attribs ? '\n' + attribs : '') || ''}
           </Text>
         )}
       </Animated.View>
@@ -394,7 +398,7 @@ const RenderBars = (props: RenderBarsPropsType) => {
           animated2DWithGradient(true, true)
         )}
         {isAnimated
-          ? renderAnimatedLabel(label, labelTextStyle, item.value)
+          ? renderAnimatedLabel(label, subLabel, attribs, labelTextStyle, item.value)
           : renderLabel(label, labelTextStyle, item.value)}
       </>
     );
