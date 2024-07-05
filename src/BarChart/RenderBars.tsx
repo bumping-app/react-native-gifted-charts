@@ -195,15 +195,28 @@ const RenderBars = (props: RenderBarsPropsType) => {
         {item.labelComponent ? (
           item.labelComponent()
         ) : (
+          <>
+          <Text
+            style={[
+              {textAlign: 'left', width:250, flexWrap:'wrap'},
+              rtl && horizontal && {transform: [{rotate: '180deg'}]},
+              labelTextStyle,
+            ]}
+            numberOfLines={1}>
+            {label + (subLabel ? '-' + subLabel : '') || ''}
+          </Text>
+          {attribs ?
           <Text
             style={[
               {textAlign: 'left', width:250, flexWrap:'wrap'},
               rtl && horizontal && {transform: [{rotate: '180deg'}]},
               // labelTextStyle,
             ]}
-            numberOfLines={2}>
-            {label + (subLabel ? '-' + subLabel : '') + (attribs ? '\n' + attribs : '') || ''}
+            numberOfLines={1}>
+            { ( attribs)}
           </Text>
+          :null}
+          </>
         )}
       </Animated.View>
     );
