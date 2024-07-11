@@ -202,7 +202,7 @@ const RenderBars = (props: RenderBarsPropsType) => {
               rtl && horizontal && {transform: [{rotate: '180deg'}]},
               labelTextStyle,
             ]}
-            numberOfLines={1}>
+            numberOfLines={2}>
             {label + (subLabel ? '-' + subLabel : '') || ''}
           </Text>
           {attribs ?
@@ -212,7 +212,7 @@ const RenderBars = (props: RenderBarsPropsType) => {
               rtl && horizontal && {transform: [{rotate: '180deg'}]},
               // labelTextStyle,
             ]}
-            numberOfLines={1}>
+            numberOfLines={2}>
             { ( attribs)}
           </Text>
           :null}
