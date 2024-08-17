@@ -302,7 +302,7 @@ const RenderBars = (props: RenderBarsPropsType) => {
     {
       // overflow: 'visible',
       marginBottom: 20 + barMarginBottom + xAxisLabelsVerticalShift - 0.5, // // CHRIS CHANGED FROM 60 +...
-      width: commonPropsFor2Dand3Dbars.barWidth,
+      width: commonPropsFor2Dand3Dbars?.barWidth,
       height: barHeight,
       marginRight: spacing + (chrisSpacing ? chrisSpacing : 0), // CHRIS CHANGE
       borderWidth:0,
